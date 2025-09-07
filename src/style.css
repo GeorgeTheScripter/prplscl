@@ -1,14 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --color-primary: #fff;
+  --color-bg: #343d4b;
+  --color-primary-inverted: #000;
+  --color-bg-card: #272e37;
+  --color-bg-main: #222831;
+  --gradient: linear-gradient(
+    90.8deg,
+    rgba(144, 217, 224, 0.9) 0.2%,
+    rgba(84, 96, 230, 0.9) 100%
+  );
+  --gradient-inverted: linear-gradient(
+    256.33deg,
+    rgba(144, 217, 224, 0.9) 9.04%,
+    rgba(84, 96, 230, 0.9) 92.2%
+  );
+  --font: "Montserrat", sans-serif;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
+body {
+  font-family: var(--font);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--color-primary);
+  background-color: var(--color-bg);
+
+  display: grid;
+  place-items: center;
 }
