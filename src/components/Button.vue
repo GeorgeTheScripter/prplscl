@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
   <button class="button">
     <div>
@@ -7,12 +9,13 @@
   </button>
 </template>
 
-<script setup></script>
-
 <style scoped>
 .button {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 53px;
   border-radius: 10px;
   padding: 14px;
   background: var(--gradient);

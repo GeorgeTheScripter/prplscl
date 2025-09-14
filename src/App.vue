@@ -1,39 +1,38 @@
 <script setup>
-import Button from "./components/Button.vue";
+import Stat from "./components/Stat.vue";
+import CitySelect from "./components/CitySelect.vue";
+import { ref } from "vue";
 
-const date = new Date()
-  .toLocaleDateString("ru-RU")
-  .replace(/\//g, ".")
-  .slice(0, 5);
+const indicators = ref([
+  { id: 1, label: "ВЛАЖНОСТЬ", indicator: "90%" },
+  { id: 2, label: "ОСАДКИ", indicator: "90%" },
+  { id: 3, label: "ВЕТЕР", indicator: "3 км/ч" },
+]);
+
+const getCity = (city) => {
+  console.log(city);
+};
 </script>
 
 <template>
   <main class="main">
     <div class="indicators">
-      <div class="indicator">
-        <p class="indicator-title">ВЛАЖНОСТЬ</p>
-        <p class="indicator-value">90%</p>
-      </div>
-      <div class="indicator">
-        <p class="indicator-title">ОСАДКИ</p>
-        <p class="indicator-value">0%</p>
-      </div>
-      <div class="indicator">
-        <p class="indicator-title">ВЕТЕР</p>
-        <p class="indicator-value">3 м/ч</p>
-      </div>
+      <Stat
+        v-for="indicator in indicators"
+        :key="indicator.id"
+        :label="indicator.label"
+        :indicator="indicator.indicator"
+      />
     </div>
 
-    <div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="days">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
     </div>
 
-    <div>
-      <Button>Изменить город</Button>
-    </div>
+    <CitySelect @select-city="getCity" />
   </main>
 </template>
 
@@ -51,16 +50,13 @@ const date = new Date()
   gap: 16px;
 }
 
-.indicator {
+.select {
   display: flex;
-  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
 }
 
-.indicator-title {
-  font-weight: 700;
-}
-
-.indicator-value {
-  font-weight: 500;
+.days {
+  display: flex;
 }
 </style>
