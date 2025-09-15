@@ -1,7 +1,7 @@
 <script setup>
 import LocationIcon from "./icons/LocationIcon.vue";
 import Button from "./Button.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Input from "./Input.vue";
 
 const emit = defineEmits({
@@ -12,25 +12,31 @@ const emit = defineEmits({
 
 const isActive = ref(false);
 
+const city = ref("london");
+
+onMounted(() => {
+  emit("select-city", city.value);
+});
+
 const select = () => {
-  isActive.value = true;
-  emit("select-city");
+  isActive.value = false;
+  emit("select-city", city.value);
 };
 
-const save = () => {
-  isActive.value = false;
+const edit = () => {
+  isActive.value = true;
 };
 </script>
 
 <template>
   <div class="city__select">
-    <Button v-if="!isActive" class="city__select-btn" @click="select()">
+    <Button v-if="!isActive" class="city__select-btn" @click="edit()">
       <template #icon><LocationIcon /></template>
       Изменить город
     </Button>
     <div v-else class="city__select-input">
-      <Input placeholder="Введите город" type="text" />
-      <Button @click="save">Сохранить</Button>
+      <Input v-model="city" placeholder="Введите город" />
+      <Button @click="select()">Сохранить</Button>
     </div>
   </div>
 </template>

@@ -1,16 +1,34 @@
 <script setup>
 import Stat from "./components/Stat.vue";
 import CitySelect from "./components/CitySelect.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const indicators = ref([
-  { id: 1, label: "ВЛАЖНОСТЬ", indicator: "90%" },
-  { id: 2, label: "ОСАДКИ", indicator: "90%" },
-  { id: 3, label: "ВЕТЕР", indicator: "3 км/ч" },
-]);
+const API_ENDPOINT = "http://api.weatherapi.com/v1";
 
-const getCity = (city) => {
-  console.log(city);
+const data = ref({
+  humidity: 90,
+  rain: 0,
+  wind: 3,
+});
+
+const dataModified = computed(() => {
+  return [
+    { id: 1, label: "ВЛАЖНОСТЬ", indicator: data.value.humidity + "%" },
+    { id: 2, label: "ОСАДКИ", indicator: data.value.rain + "%" },
+    { id: 3, label: "ВЕТЕР", indicator: data.value.wind + "км/ч" },
+  ];
+});
+
+const getCity = async (city) => {
+  const params = new URLSearchParams({
+    q: city,
+    lang: "ru",
+    key: import.meta.env.VITE_API_KEY,
+    days: 3,
+  });
+  const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
+  const data = await res.json();
+  console.log(data);
 };
 </script>
 
@@ -18,7 +36,7 @@ const getCity = (city) => {
   <main class="main">
     <div class="indicators">
       <Stat
-        v-for="indicator in indicators"
+        v-for="indicator in dataModified"
         :key="indicator.id"
         :label="indicator.label"
         :indicator="indicator.indicator"
