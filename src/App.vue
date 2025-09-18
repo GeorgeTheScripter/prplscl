@@ -5,17 +5,23 @@ import { ref, computed } from "vue";
 
 const API_ENDPOINT = "http://api.weatherapi.com/v1";
 
-const data = ref({
-  humidity: 90,
-  rain: 0,
-  wind: 3,
-});
+const data = ref();
 
 const dataModified = computed(() => {
+  if (!data.value) return [];
+
   return [
-    { id: 1, label: "ВЛАЖНОСТЬ", indicator: data.value.humidity + "%" },
-    { id: 2, label: "ОСАДКИ", indicator: data.value.rain + "%" },
-    { id: 3, label: "ВЕТЕР", indicator: data.value.wind + "км/ч" },
+    {
+      id: 1,
+      label: "ВЛАЖНОСТЬ",
+      indicator: data.value.current.humidity + " %",
+    },
+    { id: 2, label: "ОБЛАЧНОСТЬ", indicator: data.value.current.cloud + " %" },
+    {
+      id: 3,
+      label: "ВЕТЕР",
+      indicator: Math.round(data.value.current.wind_kph) + " км/ч",
+    },
   ];
 });
 
@@ -27,8 +33,7 @@ const getCity = async (city) => {
     days: 3,
   });
   const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
-  const data = await res.json();
-  console.log(data);
+  data.value = await res.json();
 };
 </script>
 
