@@ -34,8 +34,13 @@ const edit = () => {
       <template #icon><LocationIcon /></template>
       Изменить город
     </Button>
+
     <div v-else class="city__select-input">
-      <Input v-model="city" placeholder="Введите город" />
+      <Input
+        v-model="city"
+        placeholder="Введите город"
+        @keyup.enter="select()"
+      />
       <Button @click="select()">Сохранить</Button>
     </div>
   </div>
