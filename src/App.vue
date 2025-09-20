@@ -2,6 +2,7 @@
 import Stat from "./components/Stat.vue";
 import Error from "./components/Error.vue";
 import CitySelect from "./components/CitySelect.vue";
+import WeatherDayCard from "./components/WeatherDayCard.vue";
 import { ref, computed } from "vue";
 
 const API_ENDPOINT = "http://api.weatherapi.com/v1";
@@ -10,6 +11,7 @@ const errorMap = new Map([[1006, "Указаный город не найден"
 
 const data = ref();
 const error = ref();
+const activeIndex = ref(0);
 
 const errorDisplay = computed(() => {
   return errorMap.get(error.value?.error?.code);
@@ -72,10 +74,15 @@ const getCity = async (city) => {
     </div>
 
     <div class="days">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
+      <WeatherDayCard
+        v-for="(item, i) in data?.forecast.forecastday"
+        :key="item.id"
+        :temp="item.day.avgtemp_c"
+        :date="new Date(item.date)"
+        :weatherCode="item.day.condition.code"
+        :is-active="activeIndex === i"
+        @click="() => (activeIndex = i)"
+      />
     </div>
 
     <CitySelect @select-city="getCity" />
@@ -104,5 +111,7 @@ const getCity = async (city) => {
 
 .days {
   display: flex;
+  gap: 8px;
+  margin-top: 80px;
 }
 </style>
