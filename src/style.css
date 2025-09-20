@@ -5,6 +5,7 @@
   --color-bg: #343d4b;
   --color-primary-inverted: #000;
   --color-bg-card: #272e37;
+  --color-bg-card-hover: #333942;
   --color-bg-main: #222831;
   --gradient: linear-gradient(
     90.8deg,
@@ -23,6 +24,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  transition: all 0.2s ease-in-out;
 }
 
 body {
