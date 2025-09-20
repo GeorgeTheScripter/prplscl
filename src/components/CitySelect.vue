@@ -31,7 +31,7 @@ const edit = () => {
 <template>
   <div class="city__select">
     <Button v-if="!isActive" class="city__select-btn" @click="edit()">
-      <template #icon><LocationIcon /></template>
+      <template #icon><LocationIcon :size="33" /></template>
       Изменить город
     </Button>
 
@@ -39,6 +39,7 @@ const edit = () => {
       <Input
         v-model="city"
         placeholder="Введите город"
+        v-focus
         @keyup.enter="select()"
       />
       <Button @click="select()">Сохранить</Button>
@@ -54,9 +55,5 @@ const edit = () => {
 
 .city__select-btn {
   width: 100%;
-}
-
-.city__select {
-  margin-top: 70px;
 }
 </style>
