@@ -7,12 +7,11 @@ const props = defineProps({
 
 <template>
   <svg
-    width="54"
-    height="54"
+    :width="props.size"
+    :height="props.size"
     viewBox="0 0 54 54"
     :fill="props.color"
     xmlns="http://www.w3.org/2000/svg"
-    :style="{ scale: props.size / 55 }"
   >
     <g clip-path="url(#clip0_102_44)">
       <path
