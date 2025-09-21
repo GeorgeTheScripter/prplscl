@@ -6,12 +6,13 @@ import Error from "./Error.vue";
 import { computed, ref } from "vue";
 import { errorMap } from "../constants";
 
-const { data, error } = defineProps({
+const { data, error, activeIndex } = defineProps({
   data: Object,
   error: Object,
+  activeIndex: Number,
 });
 
-const activeIndex = ref(0);
+const emit = defineEmits(["select-index"]);
 
 const errorDisplay = computed(() => {
   return error ? errorMap.get(error.error?.code) : null;
@@ -20,20 +21,30 @@ const errorDisplay = computed(() => {
 const dataModified = computed(() => {
   if (!data) return [];
 
+  const dayData = data.forecast.forecastday[activeIndex].day;
+
   return [
     {
       id: 1,
       label: "ВЛАЖНОСТЬ",
-      indicator: data.current.humidity + " %",
+      indicator: dayData.avghumidity + " %",
     },
-    { id: 2, label: "ОБЛАЧНОСТЬ", indicator: data.current.cloud + " %" },
+    {
+      id: 2,
+      label: "ДОЖДЬ",
+      indicator: dayData.daily_chance_of_rain + " %",
+    },
     {
       id: 3,
       label: "ВЕТЕР",
-      indicator: Math.round(data.current.wind_kph) + " км/ч",
+      indicator: Math.round(dayData.maxwind_kph) + " км/ч",
     },
   ];
 });
+
+const handleSelectActiveIndex = (i) => {
+  emit("select-index", i);
+};
 </script>
 
 <template>
@@ -56,7 +67,7 @@ const dataModified = computed(() => {
         :date="new Date(item.date)"
         :weatherCode="item.day.condition.code"
         :is-active="activeIndex === i"
-        @click="() => (activeIndex = i)"
+        @click="handleSelectActiveIndex(i)"
       />
     </div>
 

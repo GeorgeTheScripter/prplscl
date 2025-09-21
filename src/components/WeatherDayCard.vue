@@ -40,7 +40,7 @@ const activeColors = computed(() => {
       <div>
         {{ props.date.toLocaleDateString("ru-RU", { weekday: "short" }) }}
       </div>
-      <div>{{ props.temp }} °C</div>
+      <div>{{ Math.ceil(props.temp) }} °C</div>
     </div>
   </button>
 </template>
